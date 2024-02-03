@@ -1,6 +1,7 @@
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output, stderr as error } from 'node:process';
-import { printCurrentWorkingDir, parseUserName } from "./utils/utils.js";
+import { workingDirPath, printCurrentWorkingDir, parseUserName } from "./utils/utils.js";
+import { printDirList } from './navigation/list.js';
 
 const init = () => {
     const userName = parseUserName();
@@ -15,7 +16,10 @@ const init = () => {
     rl.on('line', (input) => {
         switch (input.trim()) {
             case ".exit":
-              rl.close()
+              rl.close();
+              break;
+            case "ls":
+              printDirList(workingDirPath);
               break;
             default:
               console.log(`Command entered: ${input}`);

@@ -13,4 +13,4 @@ const parseUserName = () => {
     return userName;
 };
 
-export { printCurrentWorkingDir, parseUserName };
+export { workingDirPath, printCurrentWorkingDir, parseUserName };
