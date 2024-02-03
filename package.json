@@ -6,7 +6,9 @@
     "node": ">=20.0.0"
   },
   "type": "module",
-  "scripts": {},
+  "scripts": {
+    "start": "node src/index.js"
+  },
   "keywords": [
     "nodejs"
   ],
