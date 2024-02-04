@@ -1,11 +1,3 @@
-import { homedir } from "node:os";
-
-let workingDirPath = homedir();
-
-const printCurrentWorkingDir = () => {
-    console.log(`You are currently in ${workingDirPath}`);
-}
-
 const parseUserName = () => {
     const userName = process.argv.slice(2)
         .find((key) => key.startsWith("--username"))
@@ -13,4 +5,4 @@ const parseUserName = () => {
     return userName;
 };
 
-export { workingDirPath, printCurrentWorkingDir, parseUserName };
+export { parseUserName };

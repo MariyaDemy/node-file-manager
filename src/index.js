@@ -1,8 +1,9 @@
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output, stderr as error } from 'node:process';
-import { workingDirPath, printCurrentWorkingDir, parseUserName } from "./utils/utils.js";
+import { parseUserName } from "./utils/utils.js";
 import { printDirList } from './navigation/list.js';
 import { printEOL, printCpus, printHomeDir, printUsername, printCPUArchitecture } from './os/osInfo.js';
+import { workingDirPath, printCurrentWorkingDir, goToUpperDir } from './navigation/navigation.js';
 
 const init = () => {
     const userName = parseUserName();
@@ -23,6 +24,10 @@ const init = () => {
               await printDirList(workingDirPath);
               printCurrentWorkingDir();
               break;
+            case "up":
+                await goToUpperDir();
+                printCurrentWorkingDir();
+                break;
             case "os --EOL":
                 printEOL();
                 printCurrentWorkingDir();
