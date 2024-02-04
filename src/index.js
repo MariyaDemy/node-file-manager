@@ -3,7 +3,7 @@ import { stdin as input, stdout as output, stderr as error } from 'node:process'
 import { parseUserName } from "./utils/utils.js";
 import { printDirList } from './navigation/list.js';
 import { printEOL, printCpus, printHomeDir, printUsername, printCPUArchitecture } from './os/osInfo.js';
-import { workingDirPath, printCurrentWorkingDir, goToUpperDir } from './navigation/navigation.js';
+import { workingDirPath, printCurrentWorkingDir, goToUpperDir, goToFolder } from './navigation/navigation.js';
 
 const init = () => {
     const userName = parseUserName();
@@ -16,7 +16,14 @@ const init = () => {
     printCurrentWorkingDir();
 
     rl.on('line', async (input) => {
-        switch (input.trim()) {
+        input = input.trim();
+        if(input.includes("cd")){
+            let [_, ...folderPath] = input.split(" ");
+            await goToFolder(folderPath);
+            printCurrentWorkingDir();
+            return;
+        }
+        switch (input) {
             case ".exit":
               rl.close();
               break;
@@ -25,7 +32,11 @@ const init = () => {
               printCurrentWorkingDir();
               break;
             case "up":
-                await goToUpperDir();
+                goToUpperDir();
+                printCurrentWorkingDir();
+                break;
+            case input.includes("cd"): // ??
+                goToUpperDir();
                 printCurrentWorkingDir();
                 break;
             case "os --EOL":
@@ -54,8 +65,8 @@ const init = () => {
     });
 
     rl.on('close', () => {
-        console.log(farewellPhrase);
         printCurrentWorkingDir();
+        console.log(farewellPhrase);
     });
 }
 
