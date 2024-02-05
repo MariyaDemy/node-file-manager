@@ -6,6 +6,7 @@ import { printEOL, printCpus, printHomeDir, printUsername, printCPUArchitecture 
 import { workingDirPath, printCurrentWorkingDir, goToUpperDir, goToFolder } from './navigation/navigation.js';
 import { readFile } from './fs/readFile.js';
 import { createEmptyFile } from './fs/createEmptyFile.js';
+import { removeFile } from './fs/removeFile.js';
 
 const executeCommand = async (command) => {
     switch (command) {
@@ -64,6 +65,11 @@ const init = () => {
         } else if(input.startsWith("add")){
             let [_, ...filePath] = input.split(" ");
             await createEmptyFile(filePath);
+            printCurrentWorkingDir();
+            return;
+        } else if(input.startsWith("rm")){
+            let [_, ...filePath] = input.split(" ");
+            await removeFile(filePath);
             printCurrentWorkingDir();
             return;
         }

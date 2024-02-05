@@ -11,7 +11,7 @@ const createEmptyFile = async (path) => {
         const openedFile = await open(resolve(workingDirPath, path), 'wx+');
         await openedFile.close();
     } catch (error) {
-        console.log(`Operation failed: ${error.message}`);
+        console.log(error.message);
     }
 }
 
