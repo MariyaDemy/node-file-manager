@@ -9,7 +9,7 @@ Starting working directory is current user's home directory, e.g. C:\Users\UserN
 
 ## The list of the available commands:
 
-# Please, note that commands with 2(!) arguments expect files with spaces to be wrapped in double quotes ("). More see in the description of specific methods below.
+### Please, note that commands with 2(!) arguments expect files with spaces to be wrapped in double quotes (""). More see in the description of specific methods below.
 
 - Navigation & working directory (nwd)
     - Go upper from current directory
