@@ -24,7 +24,7 @@ const readFile = async (path) => {
             {end: false},
         );
     } catch (error) {
-        console.log(error.message);
+        console.log(`Operation failed: ${error.message}`);
     }
 }
 

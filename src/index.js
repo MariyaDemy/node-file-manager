@@ -4,9 +4,10 @@ import { parseUserName } from "./utils/utils.js";
 import { printDirList } from './navigation/list.js';
 import { printEOL, printCpus, printHomeDir, printUsername, printCPUArchitecture } from './os/osInfo.js';
 import { workingDirPath, printCurrentWorkingDir, goToUpperDir, goToFolder } from './navigation/navigation.js';
-import { readFile } from './fs/read.js';
+import { readFile } from './fs/readFile.js';
+import { createEmptyFile } from './fs/createEmptyFile.js';
 
-const onCommand = async (command) => {
+const executeCommand = async (command) => {
     switch (command) {
         case "ls":
             await printDirList(workingDirPath);
@@ -60,8 +61,13 @@ const init = () => {
             await readFile(filePath);
             printCurrentWorkingDir();
             return;
+        } else if(input.startsWith("add")){
+            let [_, ...filePath] = input.split(" ");
+            await createEmptyFile(filePath);
+            printCurrentWorkingDir();
+            return;
         }
-        onCommand(input);
+        executeCommand(input);
     });
 
     rl.on('close', () => {
