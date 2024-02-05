@@ -1,0 +1,17 @@
+{
+  "name": "node-file-manager",
+  "version": "1.0.0",
+  "description": "The Node.js File Manager",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [
+    "nodejs"
+  ],
+  "author": "MariyaDemy",
+  "license": "ISC"
+}
