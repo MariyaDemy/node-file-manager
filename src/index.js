@@ -4,6 +4,7 @@ import { parseUserName } from "./utils/utils.js";
 import { printDirList } from './navigation/list.js';
 import { printEOL, printCpus, printHomeDir, printUsername, printCPUArchitecture } from './os/osInfo.js';
 import { workingDirPath, printCurrentWorkingDir, goToUpperDir, goToFolder } from './navigation/navigation.js';
+import { readFile } from './fs/read.js';
 
 const init = () => {
     const userName = parseUserName();
@@ -17,9 +18,14 @@ const init = () => {
 
     rl.on('line', async (input) => {
         input = input.trim();
-        if(input.includes("cd")){
+        if(input.startsWith("cd")){
             let [_, ...folderPath] = input.split(" ");
             await goToFolder(folderPath);
+            printCurrentWorkingDir();
+            return;
+        } else if(input.startsWith("cat")){
+            let [_, ...filePath] = input.split(" ");
+            await readFile(filePath);
             printCurrentWorkingDir();
             return;
         }
@@ -32,10 +38,6 @@ const init = () => {
               printCurrentWorkingDir();
               break;
             case "up":
-                goToUpperDir();
-                printCurrentWorkingDir();
-                break;
-            case input.includes("cd"): // ??
                 goToUpperDir();
                 printCurrentWorkingDir();
                 break;
@@ -60,8 +62,9 @@ const init = () => {
                 printCurrentWorkingDir();
                 break;
             default:
-              console.log(`Command entered: ${input}`);
+              console.log(`Command entered: ${input}`); //TODO: вынести switch and add return and one printCurrentWorkDir
         }
+
     });
 
     rl.on('close', () => {
