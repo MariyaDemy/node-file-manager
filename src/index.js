@@ -10,6 +10,7 @@ import { removeFile } from './fs/removeFile.js';
 import { calculateHash } from './hash/calculateHash.js';
 import { renameFile } from './fs/renameFile.js';
 import { SPLIT_FILE_PATHS_REGEX } from './utils/constants';
+import { compress } from './zip/compressFile.js';
 
 const executeCommand = async (command) => {
     switch (command) {
@@ -73,6 +74,17 @@ const init = () => {
         } else if(input.startsWith("rn")){
             let [_, ...filePath] = input.split(SPLIT_FILE_PATHS_REGEX);
             await renameFile(filePath);
+            printCurrentWorkingDir();
+            return;
+        } else if(input.startsWith("compress")){
+            let [_, ...filePath] = input.split(SPLIT_FILE_PATHS_REGEX);
+            await compress(filePath);
+            printCurrentWorkingDir();
+            return;
+        }
+        else if(input.startsWith("decompress")){
+            let [_, ...filePath] = input.split(SPLIT_FILE_PATHS_REGEX);
+            await compress(filePath, true);
             printCurrentWorkingDir();
             return;
         }
