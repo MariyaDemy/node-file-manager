@@ -7,6 +7,7 @@ import { workingDirPath, printCurrentWorkingDir, goToUpperDir, goToFolder } from
 import { readFile } from './fs/readFile.js';
 import { createEmptyFile } from './fs/createEmptyFile.js';
 import { removeFile } from './fs/removeFile.js';
+import { calculateHash } from './hash/calculateHash.js';
 
 const executeCommand = async (command) => {
     switch (command) {
@@ -70,6 +71,11 @@ const init = () => {
         } else if(input.startsWith("rm")){
             let [_, ...filePath] = input.split(" ");
             await removeFile(filePath);
+            printCurrentWorkingDir();
+            return;
+        } else if(input.startsWith("hash")){
+            let [_, ...filePath] = input.split(" ");
+            await calculateHash(filePath);
             printCurrentWorkingDir();
             return;
         }
