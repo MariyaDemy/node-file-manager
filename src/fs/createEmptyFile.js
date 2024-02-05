@@ -11,7 +11,12 @@ const createEmptyFile = async (path) => {
         const openedFile = await open(resolve(workingDirPath, path), 'wx+');
         await openedFile.close();
     } catch (error) {
-        console.log(error.message);
+        const message = error.message;
+        if(message.startsWith("ENOENT") || message.startsWith("EPERM") || message.startsWith("EEXIST")) {
+            console.log(`Operation failed: ${error.message}`);
+            return;
+        }
+        console.log(message);
     }
 }
 

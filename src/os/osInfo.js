@@ -1,7 +1,7 @@
 import { EOL, cpus, homedir, userInfo, arch } from "node:os";
 
 const printEOL = () => {
-    console.log(EOL);
+    console.log(JSON.stringify(EOL));
 }
 
 const printCpus = () => {
