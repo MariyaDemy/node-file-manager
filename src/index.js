@@ -6,6 +6,35 @@ import { printEOL, printCpus, printHomeDir, printUsername, printCPUArchitecture 
 import { workingDirPath, printCurrentWorkingDir, goToUpperDir, goToFolder } from './navigation/navigation.js';
 import { readFile } from './fs/read.js';
 
+const onCommand = async (command) => {
+    switch (command) {
+        case "ls":
+            await printDirList(workingDirPath);
+            break;
+        case "up":
+            goToUpperDir();
+            break;
+        case "os --EOL":
+            printEOL();
+            break;
+        case "os --cpus":
+            printCpus();
+            break;
+        case "os --homedir":
+            printHomeDir();
+            break;
+        case "os --username":
+            printUsername();
+            break;
+        case "os --architecture":
+            printCPUArchitecture();
+            break;
+        default:
+            console.log("Invalid input: unknown operation or invalid input");
+    }
+    printCurrentWorkingDir();
+}
+
 const init = () => {
     const userName = parseUserName();
     const greetingPhrase = `Welcome to the File Manager, ${userName}!`;
@@ -18,7 +47,10 @@ const init = () => {
 
     rl.on('line', async (input) => {
         input = input.trim();
-        if(input.startsWith("cd")){
+        if(input === ".exit") {
+            rl.close();
+            return;
+        } else if(input.startsWith("cd")){
             let [_, ...folderPath] = input.split(" ");
             await goToFolder(folderPath);
             printCurrentWorkingDir();
@@ -29,42 +61,7 @@ const init = () => {
             printCurrentWorkingDir();
             return;
         }
-        switch (input) {
-            case ".exit":
-              rl.close();
-              break;
-            case "ls":
-              await printDirList(workingDirPath);
-              printCurrentWorkingDir();
-              break;
-            case "up":
-                goToUpperDir();
-                printCurrentWorkingDir();
-                break;
-            case "os --EOL":
-                printEOL();
-                printCurrentWorkingDir();
-                break;
-            case "os --cpus":
-                printCpus();
-                printCurrentWorkingDir();
-                break;
-            case "os --homedir":
-                printHomeDir();
-                printCurrentWorkingDir();
-                break;
-            case "os --username":
-                printUsername();
-                printCurrentWorkingDir();
-                break;
-            case "os --architecture":
-                printCPUArchitecture();
-                printCurrentWorkingDir();
-                break;
-            default:
-              console.log(`Command entered: ${input}`); //TODO: вынести switch and add return and one printCurrentWorkDir
-        }
-
+        onCommand(input);
     });
 
     rl.on('close', () => {
