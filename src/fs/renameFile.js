@@ -15,10 +15,7 @@ const renameFile = async (path) => {
               } else {
                 await rename(oldPath, newPath);
             }
-        } else if(path.length > 2){
-            console.log(path);
-        }
-        else {throw new Error("Invalid input: wrong or missing command arguments")}
+        } else {throw new Error("Invalid input: wrong or missing command arguments")}
     } catch (error) {
         const message = error.message;
         if(message.startsWith("ENOENT") || message.startsWith("EPERM")) {
