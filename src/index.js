@@ -8,6 +8,8 @@ import { readFile } from './fs/readFile.js';
 import { createEmptyFile } from './fs/createEmptyFile.js';
 import { removeFile } from './fs/removeFile.js';
 import { calculateHash } from './hash/calculateHash.js';
+import { renameFile } from './fs/renameFile.js';
+import { SPLIT_FILE_PATHS_REGEX } from './utils/constants';
 
 const executeCommand = async (command) => {
     switch (command) {
@@ -68,7 +70,13 @@ const init = () => {
             await createEmptyFile(filePath);
             printCurrentWorkingDir();
             return;
-        } else if(input.startsWith("rm")){
+        } else if(input.startsWith("rn")){
+            let [_, ...filePath] = input.split(SPLIT_FILE_PATHS_REGEX);
+            await renameFile(filePath);
+            printCurrentWorkingDir();
+            return;
+        }
+        else if(input.startsWith("rm")){
             let [_, ...filePath] = input.split(" ");
             await removeFile(filePath);
             printCurrentWorkingDir();
